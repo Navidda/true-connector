@@ -12,7 +12,7 @@ services:
         max-size: "200M"
     networks:
       - provider
-      - consumer
+      - local
     container_name: ecc-provider
     ports:
       - "${PROVIDER_PORT}:8449" #Port for exposing HTTP endpoints
@@ -28,7 +28,7 @@ services:
       - IDSCP2=${IDSCP2}
       - WS_EDGE=${PROVIDER_WS_EDGE}
       - WS_ECC=${WS_ECC}
-      - UC_DATAAPP_URI=https://uc-dataapp-provider:8080/platoontec/PlatoonDataUsage/1.0/
+      - UC_DATAAPP_URI=http://uc-dataapp-provider:9555
       - BROKER_URL=${BROKER_URL}
       - CACHE_TOKEN=${CACHE_TOKEN}
       - FETCH_TOKEN_ON_STARTUP=${FETCH_TOKEN_ON_STARTUP}
@@ -51,33 +51,49 @@ services:
       - "ecc-provider:172.17.0.1"
 
   uc-dataapp-provider:
-    image: rdlabengpa/ids_uc_data_app_platoon:v1.7.8
-    deploy:
-      resources:
-        limits:
-          cpus: "1"
-          memory: 256M
-    logging:
-      options:
-        max-size: "100M"
+    image: rdlabengpa/ids_uc_data_app:v0.0.6
+    environment:
+      - TZ=Europe/Rome 
+    ports:
+      - "9552:9555"
+      - "8043:43"
+    volumes:
+      - ./policies:/policies
+      - ./uc-dataapp_resources_mydata:/config
     networks:
       - provider
     container_name: uc-dataapp-provider
-    environment:
-      - "JDK_JAVA_OPTIONS=-Xmx256m"
-      - ECC_PORT=8449
-      - ECC_SELF_DESCRIPTION_URL=${PROVIDER_ECC_SELF_DESCRIPTION_URL}
-      - KEYSTORE_NAME=${KEYSTORE_NAME}
-      - KEY_PASSWORD=${KEY_PASSWORD}
-      - KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD}
-      - ALIAS=${ALIAS}
-      - TZ=Europe/Rome
-    expose:
-      - "8080"
-    volumes:
-      - ./uc-dataapp_resources_provider:/config
-      - uc_provider_data:/data
-      - ./ecc_cert:/cert
+
+# uc-dataapp-provider:
+#   image: rdlabengpa/ids_uc_data_app_platoon:v1.7.8
+#   deploy:
+#     resources:
+#       limits:
+#         cpus: "1"
+#         memory: 512M
+#   logging:
+#     options:
+#       max-size: "100M"
+#   networks:
+#     - provider
+#   container_name: uc-dataapp-provider
+#   environment:
+#     - "JDK_JAVA_OPTIONS=-Xmx256m"
+#     - ECC_PORT=8449
+#     - ECC_SELF_DESCRIPTION_URL=${PROVIDER_ECC_SELF_DESCRIPTION_URL}
+#     - KEYSTORE_NAME=${KEYSTORE_NAME}
+#     - KEY_PASSWORD=${KEY_PASSWORD}
+#     - KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD}
+#     - ALIAS=${ALIAS}
+#     - TZ=Europe/Rome
+#   ports:
+#     - "8080:8080"
+#   expose:
+#     - "8080"
+#   volumes:
+#     - ./uc-dataapp_resources_provider:/config
+#     - uc_provider_data:/data
+#     - ./ecc_cert:/cert
 
   uc-dataapp-pip-provider:
     image: rdlabengpa/ids_uc_data_app_platoon_pip:v1.0.0
@@ -149,7 +165,7 @@ services:
         max-size: "200M"
     networks:
       - consumer
-      - provider
+      - local
     container_name: ecc-consumer
     ports:
       - "${CONSUMER_PORT}:8449" #Port for exposing HTTP endpoints
@@ -165,7 +181,7 @@ services:
       - IDSCP2=${IDSCP2}
       - WS_EDGE=${CONSUMER_WS_EDGE}
       - WS_ECC=${WS_ECC}
-      - UC_DATAAPP_URI=https://uc-dataapp-consumer:8080/platoontec/PlatoonDataUsage/1.0/
+      - UC_DATAAPP_URI=http://uc-dataapp-consumer:9555
       - BROKER_URL=${BROKER_URL}
       - CACHE_TOKEN=${CACHE_TOKEN}
       - FETCH_TOKEN_ON_STARTUP=${FETCH_TOKEN_ON_STARTUP}
@@ -188,33 +204,48 @@ services:
       - "ecc-consumer:172.17.0.1"
 
   uc-dataapp-consumer:
-    image: rdlabengpa/ids_uc_data_app_platoon:v1.7.8
-    deploy:
-      resources:
-        limits:
-          cpus: "1"
-          memory: 256M
-    logging:
-      options:
-        max-size: "100M"
+    image: rdlabengpa/ids_uc_data_app:v0.0.6
+    environment:
+      - TZ=Europe/Rome  
+    ports:
+      - "9553:9555"
+      - "8044:43"
+    volumes:
+      - ./policies:/policies
+      - ./uc-dataapp_resources_mydata:/config
     networks:
       - consumer
+  
     container_name: uc-dataapp-consumer
-    environment:
-      - "JDK_JAVA_OPTIONS=-Xmx256m"
-      - ECC_PORT=8449
-      - ECC_SELF_DESCRIPTION_URL=${CONSUMER_ECC_SELF_DESCRIPTION_URL}
-      - KEYSTORE_NAME=${KEYSTORE_NAME}
-      - KEY_PASSWORD=${KEY_PASSWORD}
-      - KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD}
-      - ALIAS=${ALIAS}
-      - TZ=Europe/Rome
-    expose:
-      - "8080"
-    volumes:
-      - ./uc-dataapp_resources_consumer:/config
-      - uc_consumer_data:/data
-      - ./ecc_cert:/cert
+
+# uc-dataapp-consumer:
+#   image: rdlabengpa/ids_uc_data_app_platoon:v1.7.8
+#   deploy:
+#     resources:
+#       limits:
+#         cpus: "1"
+#         memory: 512M
+#   logging:
+#     options:
+#       max-size: "100M"
+#   networks:
+#     - consumer
+#   container_name: uc-dataapp-consumer
+#   environment:
+#     - "JDK_JAVA_OPTIONS=-Xmx256m"
+#     - ECC_PORT=8449
+#     - ECC_SELF_DESCRIPTION_URL=${CONSUMER_ECC_SELF_DESCRIPTION_URL}
+#     - KEYSTORE_NAME=${KEYSTORE_NAME}
+#     - KEY_PASSWORD=${KEY_PASSWORD}
+#     - KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD}
+#     - ALIAS=${ALIAS}
+#     - TZ=Europe/Rome
+#   expose:
+#     - "8080"
+#   volumes:
+#     - ./uc-dataapp_resources_consumer:/config
+#     - uc_consumer_data:/data
+#     - ./ecc_cert:/cert
 
   uc-dataapp-pip-consumer:
     image: rdlabengpa/ids_uc_data_app_platoon_pip:v1.0.0
@@ -277,6 +308,11 @@ services:
 networks:
   consumer: {}
   provider: {}
+  local:
+    # driver: bridge
+    external: true
+    name: dataspace
+
 
 volumes:
   ecc_provider_data: {}
