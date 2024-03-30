@@ -10,7 +10,7 @@
   "ids:consumer": "ecc-consumer",    
   "ids:permission": [{    
       "ids:target": {
-          "@id":"http://w3id.org/engrd/connector/artifact/5"
+          "@id":"http://w3id.org/engrd/connector/artifact/feed_index.json"
        },    
       "ids:action": [{
         "@id":"idsc:USE"
