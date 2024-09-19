@@ -28,7 +28,7 @@ services:
       - IDSCP2=${IDSCP2}
       - WS_EDGE=${PROVIDER_WS_EDGE}
       - WS_ECC=${WS_ECC}
-      - UC_DATAAPP_URI=http://uc-dataapp-provider:9555
+      - UC_DATAAPP_URI=http://uc-dataapp-provider:9552
       - BROKER_URL=${BROKER_URL}
       - CACHE_TOKEN=${CACHE_TOKEN}
       - FETCH_TOKEN_ON_STARTUP=${FETCH_TOKEN_ON_STARTUP}
@@ -50,19 +50,19 @@ services:
     extra_hosts:
       - "ecc-provider:172.17.0.1"
 
-  uc-dataapp-provider:
-    image: rdlabengpa/ids_uc_data_app:v0.0.6
-    environment:
-      - TZ=Europe/Rome 
-    ports:
-      - "9552:9555"
-      - "8043:43"
-    volumes:
-      - ./policies:/policies
-      - ./uc-dataapp_resources_mydata:/config
-    networks:
-      - provider
-    container_name: uc-dataapp-provider
+  # uc-dataapp-provider:
+  #   image: uc-dataapp
+  #   environment:
+  #     - TZ=Europe/Rome 
+  #   ports:
+  #     - "9552:9552"
+  #     # - "8043:43"
+  #   # volumes:
+  #     # - ./policies:/policies
+  #     # - ./uc-dataapp_resources_mydata:/config
+  #   networks:
+  #     - provider
+  #   container_name: uc-dataapp-provider
 
 # uc-dataapp-provider:
 #   image: rdlabengpa/ids_uc_data_app_platoon:v1.7.8
@@ -95,26 +95,26 @@ services:
 #     - uc_provider_data:/data
 #     - ./ecc_cert:/cert
 
-  uc-dataapp-pip-provider:
-    image: rdlabengpa/ids_uc_data_app_platoon_pip:v1.0.0
-    deploy:
-      resources:
-        limits:
-          cpus: "1"
-          memory: 256M
-    logging:
-      options:
-        max-size: "100M"
-    networks:
-      - provider
-    container_name: uc-dataapp-pip-provider
-    environment:
-      - "JDK_JAVA_OPTIONS=-Xmx256m"
-      - TZ=Europe/Rome
-    expose:
-      - "8085"
-    volumes:
-      - ./uc-dataapp-pip_resources_provider:/etc
+  # uc-dataapp-pip-provider:
+  #   image: rdlabengpa/ids_uc_data_app_platoon_pip:v1.0.0
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: "1"
+  #         memory: 256M
+  #   logging:
+  #     options:
+  #       max-size: "100M"
+  #   networks:
+  #     - provider
+  #   container_name: uc-dataapp-pip-provider
+  #   environment:
+  #     - "JDK_JAVA_OPTIONS=-Xmx256m"
+  #     - TZ=Europe/Rome
+  #   expose:
+  #     - "8085"
+  #   volumes:
+  #     - ./uc-dataapp-pip_resources_provider:/etc
 
   be-dataapp-provider:
     image: rdlabengpa/ids_be_data_app:v0.3.8
@@ -181,7 +181,7 @@ services:
       - IDSCP2=${IDSCP2}
       - WS_EDGE=${CONSUMER_WS_EDGE}
       - WS_ECC=${WS_ECC}
-      - UC_DATAAPP_URI=http://uc-dataapp-consumer:9555
+      - UC_DATAAPP_URI=http://uc-dataapp-consumer:9552
       - BROKER_URL=${BROKER_URL}
       - CACHE_TOKEN=${CACHE_TOKEN}
       - FETCH_TOKEN_ON_STARTUP=${FETCH_TOKEN_ON_STARTUP}
@@ -204,15 +204,15 @@ services:
       - "ecc-consumer:172.17.0.1"
 
   uc-dataapp-consumer:
-    image: rdlabengpa/ids_uc_data_app:v0.0.6
+    image: uc-dataapp
     environment:
       - TZ=Europe/Rome  
     ports:
-      - "9553:9555"
-      - "8044:43"
-    volumes:
-      - ./policies:/policies
-      - ./uc-dataapp_resources_mydata:/config
+      - "9553:9552"
+      # - "8044:43"
+    # volumes:
+      # - ./policies:/policies
+      # - ./uc-dataapp_resources_mydata:/config
     networks:
       - consumer
   
@@ -247,26 +247,26 @@ services:
 #     - uc_consumer_data:/data
 #     - ./ecc_cert:/cert
 
-  uc-dataapp-pip-consumer:
-    image: rdlabengpa/ids_uc_data_app_platoon_pip:v1.0.0
-    deploy:
-      resources:
-        limits:
-          cpus: "1"
-          memory: 256M
-    logging:
-      options:
-        max-size: "100M"
-    networks:
-      - consumer
-    container_name: uc-dataapp-pip-consumer
-    environment:
-      - "JDK_JAVA_OPTIONS=-Xmx256m"
-      - TZ=Europe/Rome
-    expose:
-      - "8085"
-    volumes:
-      - ./uc-dataapp-pip_resources_consumer:/etc
+  # uc-dataapp-pip-consumer:
+  #   image: rdlabengpa/ids_uc_data_app_platoon_pip:v1.0.0
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: "1"
+  #         memory: 256M
+  #   logging:
+  #     options:
+  #       max-size: "100M"
+  #   networks:
+  #     - consumer
+  #   container_name: uc-dataapp-pip-consumer
+  #   environment:
+  #     - "JDK_JAVA_OPTIONS=-Xmx256m"
+  #     - TZ=Europe/Rome
+  #   expose:
+  #     - "8085"
+  #   volumes:
+  #     - ./uc-dataapp-pip_resources_consumer:/etc
 
   be-dataapp-consumer:
     image: rdlabengpa/ids_be_data_app:v0.3.8
@@ -303,7 +303,7 @@ services:
     volumes:
       - ./be-dataapp_resources:/config
       - ./ecc_cert:/cert
-      - be_dataapp_consumer_data:/home/nobody/data
+      - trueconnector_be_dataapp_consumer_data:/home/nobody/data
 
 networks:
   consumer: {}
@@ -319,6 +319,7 @@ volumes:
   uc_provider_data: {}
   ecc_consumer_data: {}
   uc_consumer_data: {}
-  be_dataapp_consumer_data: {}
+  trueconnector_be_dataapp_consumer_data:
+    external: true
   trueconnector_be_dataapp_provider_data:
     external: true
