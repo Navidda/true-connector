@@ -1,0 +1,46 @@
+{
+    "@context": {
+        "ids":"https://w3id.org/idsa/core/",
+        "idsc" : "https://w3id.org/idsa/code/",
+        "cti" : "https://w3id.org/cti/dataspace/"
+     },
+    "@type": "ids:ContractOffer",
+    "@id": "https://w3id.org/idsa/autogen/contractOffer/corelation",
+    "ids:contractStart": {
+        "@value": "2024-03-29T20:43:42.331Z",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp"
+    },
+    "ids:contractDate": {
+        "@value": "2024-03-29T20:43:42.939Z",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp"
+    },
+    "ids:provider": {
+        "@id": "http://w3id.org/engrd/connector/corelation"
+    },
+    "ids:permission": [
+        {
+            "@type": "ids:Permission",
+            "@id": "https://w3id.org/idsa/autogen/permission/<uuid>",
+            "ids:action": [
+                {
+                    "@id": "https://w3id.org/idsa/code/USE"
+                }
+            ],
+            "ids:title": [
+                {
+                    "@value": "Corelation Usage Policy",
+                    "@type": "http://www.w3.org/2001/XMLSchema#string"
+                }
+            ],
+            "ids:description": [
+                {
+                    "@value": "provide-access",
+                    "@type": "http://www.w3.org/2001/XMLSchema#string"
+                }
+            ],
+            "ids:target": {
+                "@id": "http://w3id.org/engrd/connector/artifact/iocs.json"
+            }
+        }
+    ]
+}

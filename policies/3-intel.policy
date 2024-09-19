@@ -1,0 +1,68 @@
+{
+    "@context": {
+        "ids":"https://w3id.org/idsa/core/",
+        "idsc" : "https://w3id.org/idsa/code/",
+        "cti" : "https://w3id.org/cti/dataspace/"
+     },
+    "@type": "ids:ContractOffer",
+    "@id": "https://w3id.org/idsa/autogen/contractOffer/threatIntel",
+    "ids:contractStart": {
+        "@value": "2024-03-29T20:43:42.331Z",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp"
+    },
+    "ids:contractDate": {
+        "@value": "2024-03-29T20:43:42.939Z",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp"
+    },
+    "ids:provider": {
+        "@id": "http://w3id.org/engrd/connector/threatIntel"
+    },
+    "ids:permission": [
+        {
+            "@type": "ids:Permission",
+            "@id": "https://w3id.org/idsa/autogen/permission/<uuid>",
+            "ids:action": [
+                {
+                    "@id": "https://w3id.org/idsa/code/USE"
+                }
+            ],
+            "ids:title": [
+                {
+                    "@value": "Threat Intelligence Usage Policy",
+                    "@type": "http://www.w3.org/2001/XMLSchema#string"
+                }
+            ],
+            "ids:description": [
+                {
+                    "@value": "provide-access",
+                    "@type": "http://www.w3.org/2001/XMLSchema#string"
+                }
+            ],
+            "ids:target": {
+                "@id": "http://w3id.org/engrd/connector/artifact/stix.json"
+            },
+            "ids:constraint": [{    
+                "@type":"ids:Constraint",  
+                "ids:leftOperand": { "@id": "idsc:PAYMENT"},  
+                "ids:operator": { "@id": "idsc:EQ"},  
+                "ids:rightOperand": { 
+                    "@value": "?fee", 
+                    "@type": "http://www.w3.org/2001/XMLSchema#double"
+                },
+                "ids:contract": "http://dbpedia.org/page/Rent",
+                "ids:unit": "http://dbpedia.org/resource/Euro",	
+                "ids:frequency": {"@id":"idsc:ANNUAL" },
+                "ids:pipEndpoint":{
+                    "ids:interfaceDescription":{
+                        "@value":"https://example.com/ids/pip/id/payment", 
+                        "@type":"xsd:anyURI"
+                    }, 
+                    "ids:endpointURI":{
+                         "@value":"https://provider.org/pip/ep/payment", 
+                        "@type":"xsd:anyURI"
+                    } 
+                } 
+            }]
+        }
+    ]
+}

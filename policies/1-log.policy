@@ -1,0 +1,184 @@
+{
+    "@context": {
+        "ids": "https://w3id.org/idsa/core/",
+        "idsc": "https://w3id.org/idsa/code/",
+        "cti": "https://w3id.org/cti/dataspace/"
+    },
+    "@type": "ids:ContractOffer",
+    "@id": "https://w3id.org/idsa/autogen/contractOffer/sensor",
+    "ids:contractStart": {
+        "@value": "2024-03-29T20:43:42.331Z",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp"
+    },
+    "ids:contractDate": {
+        "@value": "2024-03-29T20:43:42.939Z",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp"
+    },
+    "ids:provider": {
+        "@id": "http://w3id.org/engrd/connector/sensor"
+    },
+    "ids:consumer": {
+        "ids:participantRefinement": [
+            {
+                "ids:leftOperand": "vcard:hasGeo",
+                "ids:operator": "ids:IN",
+                "ids:rightOperand": [
+                    {
+                        "@value": "http://ontologi.es/place/EU",
+                        "@type": "xsd:anyURI"
+                    }
+                ],
+                "ids:pipEndpoint": {
+                    "@type": "ids:PIP",
+                    "ids:interfaceDescription": {
+                        "@value": "https://example.com/ids/pip/id/geo",
+                        "@type": "xsd:anyURI"
+                    },
+                    "ids:endpointURI": {
+                        "@value": "https://consumer.org/pip/ep/geo",
+                        "@type": "xsd:anyURI"
+                    }
+                }
+            }
+        ]
+    },
+    "ids:permission": [
+        {
+            "ids:description": [
+                {
+                    "@value": "Permission to use by SIEM Data App",
+                    "@type": "http://www.w3.org/2001/XMLSchema#string"
+                }
+            ],
+            "ids:target": {
+                "@id": "http://w3id.org/engrd/connector/artifact/firewall.log"
+            },
+            "ids:action": [
+                {
+                    "@id": "idsc:USE"
+                }
+            ],
+            "ids:constraint": [
+                {
+                    "@type": "ids:Constraint",
+                    "ids:leftOperand": {
+                        "@id": "idsc:APPLICATION"
+                    },
+                    "ids:operator": {
+                        "@id": "idsc:EQUALS"
+                    },
+                    "ids:rightOperand": {
+                        "@value": "http://example.com/ids/application/siem-app",
+                        "@type": "xsd:anyURI"
+                    },
+                    "ids:pipEndpoint": {
+                        "@type": "ids:PIP",
+                        "ids:interfaceDescription": {
+                            "@value": "https://example.com/ids/pip/id/application",
+                            "@type": "xsd:anyURI"
+                        },
+                        "ids:endpointURI": {
+                            "@value": "https://consumer.org/pip/ep/application",
+                            "@type": "xsd:anyURI"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "@type": "ids:Permission",
+            "@id": "https://w3id.org/idsa/autogen/permission/<uuid>",
+            "ids:action": [
+                {
+                    "@id": "https://w3id.org/idsa/code/USE"
+                }
+            ],
+            "ids:description": [
+                {
+                    "@value": "Permission to use aggregated and annonymized data for threat detection in Germany",
+                    "@type": "http://www.w3.org/2001/XMLSchema#string"
+                }
+            ],
+            "ids:target": {
+                "@id": "http://w3id.org/engrd/connector/artifact/firewall.log"
+            },
+            "ids:constraint": [
+                {
+                    "@type": "ids:Constraint",
+                    "ids:leftOperand": {
+                        "@id": "idsc:ARTIFACT_STATE"
+                    },
+                    "ids:operator": {
+                        "@id": "idsc:COVERS"
+                    },
+                    "ids:rightOperand": {
+                        "@value": [
+                            "idsc:COMBINED",
+                            "idsc:ANNONYMIZED"
+                        ],
+                        "@type": "xsd:string"
+                    },
+                    "ids:pipEndpoint": {
+                        "@type": "ids:PIP",
+                        "ids:interfaceDescription": {
+                            "@value": "https://example.com/ids/pip/id/artifact",
+                            "@type": "xsd:anyURI"
+                        },
+                        "ids:endpointURI": {
+                            "@value": "https://consumer.org/pip/ep/artifact",
+                            "@type": "xsd:anyURI"
+                        }
+                    }
+                },
+                {
+                    "@type": "ids:Constraint",
+                    "ids:leftOperand": {
+                        "@id": "idsc:PURPOSE"
+                    },
+                    "ids:operator": {
+                        "@id": "idsc:SAME_AS"
+                    },
+                    "ids:rightOperand": {
+                        "@value": "http://example.com/ids/purpose/threat-detection",
+                        "@type": "xsd:anyURI"
+                    },
+                    "ids:pipEndpoint": {
+                        "@type": "ids:PIP",
+                        "ids:interfaceDescription": {
+                            "@value": "https://example.com/ids/pip/id/purpose",
+                            "@type": "xsd:anyURI"
+                        },
+                        "ids:endpointURI": {
+                            "@value": "https://consumer.org/pip/ep/purpose",
+                            "@type": "xsd:anyURI"
+                        }
+                    }
+                },
+                {
+                    "@type": "ids:Constraint",
+                    "ids:leftOperand": {
+                        "@id": "idsc:ABSOLUTE_SPATIAL_POSITION"
+                    },
+                    "ids:operator": {
+                        "@id": "idsc:SAME_AS"
+                    },
+                    "ids:rightOperand": {
+                        "@value": "http://ontologi.es/place/DE",
+                        "@type": "xsd:anyURI"
+                    },
+                    "ids:pipEndpoint": {
+                        "@type": "ids:PIP",
+                        "ids:interfaceDescription": {
+                            "@value": "https://example.com/ids/pip/id/location",
+                            "@type": "xsd:anyURI"
+                        },
+                        "ids:endpointURI": {
+                            "@value": "https://consumer.org/pip/ep/location ",
+                            "@type": "xsd:anyURI"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
